@@ -2,15 +2,13 @@ services:
   - type: web
     name: exam-vault
     env: python
+    plan: free
     buildCommand: pip install -r requirements.txt
-    startCommand: gunicorn EMS.wsgi
+    startCommand: gunicorn clgproject.wsgi:application
     envVars:
-      - key: DEBUG
-        value: "False"
+      - key: DJANGO_SETTINGS_MODULE
+        value: clgproject.settings
       - key: SECRET_KEY
-        generateValue: true
-      - key: PINATA_API_KEY
-        value: your_actual_key_here
-      - key: PINATA_SECRET_API_KEY
-        value: your_actual_secret_here
-    staticPublishPath: static/
+        value: your-secret-key-here
+      - key: DEBUG
+        value: False
