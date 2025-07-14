@@ -72,8 +72,14 @@ class Request(models.Model):
 	q_pattern = models.FileField(default=None)
 	deadline = models.DateField(default=datetime.date.today)
 	status = models.CharField(max_length=10,default='Pending')
-	enc_field = ArrayField(models.BinaryField(max_length=500,default=None),default=list)
-	private_key = models.FileField(default=None)
+	enc_field = ArrayField(
+    base_field=models.BinaryField(max_length=500, null=True, blank=True),
+    default=list,
+    blank=True,
+    null=True
+)
+
+	private_key = models.FileField(upload_to='private_keys/', blank=True, null=True)
 
 	def __str__(self):
 		return self.tusername

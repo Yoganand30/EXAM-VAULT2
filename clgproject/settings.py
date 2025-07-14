@@ -86,14 +86,15 @@ WSGI_APPLICATION = 'clgproject.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'ems',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'ems_db',
         'USER': 'admin_ems',
         'PASSWORD': 'iamadmin@123',
         'HOST': 'localhost',
-        'PORT': '',
+        'PORT': '5432',
     }
 }
+
 
 
 # Password validation
@@ -120,13 +121,14 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'Asia/Kolkata'
+timezone = 'UTC'
+
 
 USE_I18N = True
 
 USE_L10N = True
 
-USE_TZ = True
+USE_TZ = False
 
 
 # Static files (CSS, JavaScript, Images)
