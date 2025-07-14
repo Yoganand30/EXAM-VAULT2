@@ -31,7 +31,8 @@ IPFS_STORAGE_GATEWAY_URL = 'http://localhost:8080/ipfs/'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['exam-vault2.onrender.com', 'localhost', '127.0.0.1']
+
 
 
 # Application definition
