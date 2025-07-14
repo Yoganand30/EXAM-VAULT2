@@ -29,9 +29,10 @@ IPFS_STORAGE_GATEWAY_URL = 'http://localhost:8080/ipfs/'
 
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = ['exam-vault2.onrender.com', 'localhost', '127.0.0.1']
+ALLOWED_HOSTS = ['exam-vault2.onrender.com']
+
 
 
 
@@ -84,17 +85,14 @@ WSGI_APPLICATION = 'clgproject.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
+import dj_database_url
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'ems_db',
-        'USER': 'admin_ems',
-        'PASSWORD': 'iamadmin@123',
-        'HOST': 'localhost',
-        'PORT': '5432',
-    }
+    'default': dj_database_url.config(
+        default='postgresql://examvault_db_user:SRoymGOhuzBFpTx3dCYFbuKAlOdFnQH3@dpg-d1qehlbe5dus73e68emg-a/examvault_db'
+    )
 }
+
 
 
 
@@ -145,3 +143,5 @@ STATICFILES_DIRS=[
 STATIC_ROOT = os.path.join(BASE_DIR, "static_cdn")
 MEDIA_ROOT= os.path.join(BASE_DIR, 'media/')
 ENCRYPTION_ROOT= os.path.join(BASE_DIR, 'static/encrypted_files')
+# Render collects static files here on build
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
