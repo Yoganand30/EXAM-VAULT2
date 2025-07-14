@@ -66,19 +66,18 @@ class CustomUser(AbstractUser):
 		return self.username
 
 class Request(models.Model):
-	tusername = models.CharField(max_length=40,default='None')
-	s_code = models.CharField(max_length=7,default="None")
-	syllabus = models.FileField(default=None)
-	q_pattern = models.FileField(default=None)
+	tusername = models.CharField(max_length=40, default='None')
+	s_code = models.CharField(max_length=7, default="None")
+	syllabus = models.FileField(blank=True, null=True)
+	q_pattern = models.FileField(blank=True, null=True)
 	deadline = models.DateField(default=datetime.date.today)
-	status = models.CharField(max_length=10,default='Pending')
+	status = models.CharField(max_length=10, default='Pending')
 	enc_field = ArrayField(
-    base_field=models.BinaryField(max_length=500, null=True, blank=True),
-    default=list,
-    blank=True,
-    null=True
-)
-
+		base_field=models.BinaryField(max_length=500, null=True, blank=True),
+		default=list,
+		blank=True,
+		null=True
+	)
 	private_key = models.FileField(upload_to='private_keys/', blank=True, null=True)
 
 	def __str__(self):
@@ -90,7 +89,7 @@ class FinalPapers(models.Model):
 	semester = models.CharField(max_length=4,default='None')
 	branch = models.CharField(max_length=40,default='None')
 	subject = models.CharField(max_length=30,default='None')
-	paper = models.FileField(default=None)
+	paper = models.FileField(upload_to='final_papers/', blank=True, null=True)
 
 	def __str__(self):
 		return self.s_code

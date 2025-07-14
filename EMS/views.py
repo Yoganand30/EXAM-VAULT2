@@ -9,6 +9,7 @@ from .encryption import *
 from .a_encryption import *
 from django.conf import settings
 from django.core.files import File
+from .ipfs_utils import upload_to_pinata
 import os, requests, ipfshttpclient
 
 
@@ -43,9 +44,10 @@ def teacher_dashboard(request):
         else:
             paper = request.FILES.get('paper', None)
             key = encrypt_file(paper)
-            api = ipfshttpclient.connect('/ip4/127.0.0.1/tcp/5001')
-            new_file = api.add('static/encrypted_files/' + str(paper) + '.encrypted')
-            hash_id = new_file['Hash']
+            file_path = 'static/encrypted_files/' + str(paper) + '.encrypted'
+            with open(file_path, 'rb') as f:
+                url, hash_id = upload_to_pinata(f)
+            
             arr = a_encryption(hash_id, key, request.user.teacher_id)
             file_ = open(os.path.join(settings.ENCRYPTION_ROOT, request.user.teacher_id + '_private_key.pem'), 'rb')
             p_file = File(file_)
@@ -78,7 +80,7 @@ def coe_dashboard(request):
 
             values = a_decryption([paper['enc_field'], paper['private_key']])
             hash_id = values[1].decode('utf-8')
-            r = requests.get('http://127.0.0.1:8080/ipfs/' + hash_id)
+            r = requests.get(f"https://gateway.pinata.cloud/ipfs/{hash_id}")
             final_paper = decrypt_file(r, values[0], paper['s_code'])
 
             FinalPapers.objects.create(
