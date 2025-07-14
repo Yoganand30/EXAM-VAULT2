@@ -1,14 +1,8 @@
 services:
   - type: web
     name: exam-vault
-    env: python
-    plan: free
-    buildCommand: pip install -r requirements.txt
-    startCommand: gunicorn clgproject.wsgi:application
-    envVars:
-      - key: DJANGO_SETTINGS_MODULE
-        value: clgproject.settings
-      - key: SECRET_KEY
-        value: your-secret-key-here
-      - key: DEBUG
-        value: False
+    runtime: python
+    buildCommand: "pip install -r requirements.txt"
+    startCommand: "gunicorn clgproject.wsgi:application"
+    build:
+      pythonVersion: 3.11.8
